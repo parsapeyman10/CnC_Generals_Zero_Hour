@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Generals palette - تیره نظامی مثل PC -->
+    <color name="generals_black">#FF0A0E14</color>
+    <color name="generals_dark">#FF131A26</color>
+    <color name="generals_panel">#FF1C2533</color>
+    <color name="generals_gold">#FFD4A017</color>
+    <color name="generals_gold_light">#FFFFD54F</color>
+    <color name="generals_gold_dark">#FF8D6E00</color>
+    <color name="generals_green">#FF4CAF50</color>
+    <color name="generals_red">#FFD32F2F</color>
+    <color name="generals_blue">#FF1976D2</color>
+    <color name="generals_grey">#FF78909C</color>
+    <color name="generals_grey_light">#FFB0BEC5</color>
+    <color name="generals_orange">#FFFF6F00</color>
+    <color name="terrain_sand">#FFC2B280</color>
+    <color name="terrain_grass">#FF556B2F</color>
+    <color name="fog_of_war">#AA000000</color>
+    <color name="selection_green">#FF00FF00</color>
+    <color name="selection_red">#FFFF0000</color>
+    <color name="transparent">#00000000</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

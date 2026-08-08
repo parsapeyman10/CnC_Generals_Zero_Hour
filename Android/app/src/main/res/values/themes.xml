@@ -1,0 +1,44 @@
+<resources>
+    <!-- Base theme - تیره مثل Generals PC -->
+    <style name="Theme.Generals" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/generals_gold</item>
+        <item name="colorPrimaryVariant">@color/generals_gold_dark</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorSecondary">@color/generals_grey</item>
+        <item name="android:statusBarColor">@color/generals_black</item>
+        <item name="android:navigationBarColor">@color/generals_black</item>
+        <item name="android:windowBackground">@color/generals_black</item>
+    </style>
+
+    <style name="Theme.Generals.Splash" parent="Theme.Generals">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
+
+    <style name="Generals.Button" parent="Widget.Material3.Button">
+        <item name="android:textColor">@color/generals_gold_light</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="cornerRadius">2dp</item>
+        <item name="backgroundTint">@color/generals_panel</item>
+        <item name="strokeColor">@color/generals_gold_dark</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="Generals.Button.Gold" parent="Generals.Button">
+        <item name="backgroundTint">@color/generals_gold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Generals.Text.Title">
+        <item name="android:textColor">@color/generals_gold_light</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.1</item>
+    </style>
+
+    <style name="Generals.Text.Body">
+        <item name="android:textColor">@color/generals_grey_light</item>
+        <item name="android:fontFamily">monospace</item>
+    </style>
+</resources>

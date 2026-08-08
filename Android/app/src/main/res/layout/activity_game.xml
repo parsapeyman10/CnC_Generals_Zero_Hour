@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/generals_black">
+
+    <!-- Game View - جایگزین W3DView روی PC -->
+    <com.ea.generals.ui.GameView
+        android:id="@+id/gameView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Top Bar - مثل PC -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:background="#CC0A0E14">
+
+        <TextView
+            android:id="@+id/tvCredits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Credits: 10000 $"
+            android:textSize="10sp"
+            android:textColor="@color/generals_gold_light"
+            android:fontFamily="monospace"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tvPower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Power: +120"
+            android:textSize="10sp"
+            android:textColor="@color/generals_green"
+            android:fontFamily="monospace"
+            android:layout_marginEnd="12dp" />
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textSize="10sp"
+            android:textColor="@color/white"
+            android:fontFamily="monospace" />
+
+        <ImageView
+            android:id="@+id/btnMenu"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_generals_star"
+            android:padding="6dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/bg_panel" />
+    </LinearLayout>
+
+    <!-- Bottom Control Bar - مثل PC ControlBar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:background="#E61C2533"
+        android:padding="6dp"
+        android:gravity="center_vertical">
+
+        <!-- Build palette -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnBuildDozer"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_panel"
+                android:padding="2dp"
+                android:src="@drawable/ic_generals_star" />
+
+            <ImageView
+                android:id="@+id/btnBuildSupply"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="4dp"
+                android:background="@drawable/bg_panel"
+                android:padding="2dp"
+                android:src="@drawable/ic_generals_star" />
+
+            <ImageView
+                android:id="@+id/btnBuildBarracks"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="4dp"
+                android:background="@drawable/bg_panel"
+                android:src="@drawable/ic_generals_star" />
+
+            <ImageView
+                android:id="@+id/btnBuildWarFactory"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="4dp"
+                android:background="@drawable/bg_panel"
+                android:src="@drawable/ic_generals_star" />
+        </LinearLayout>
+
+        <!-- Minimap placeholder -->
+        <FrameLayout
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:background="@color/generals_dark"
+            android:layout_marginStart="6dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/terrain_sand"
+                android:alpha="0.5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="RADAR"
+                android:textSize="8sp"
+                android:textColor="@color/generals_grey"
+                android:fontFamily="monospace" />
+        </FrameLayout>
+
+        <!-- Command buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginStart="6dp">
+
+            <Button
+                android:id="@+id/btnAttack"
+                android:layout_width="64dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/attack"
+                android:textSize="8sp"
+                style="@style/Generals.Button" />
+
+            <Button
+                android:id="@+id/btnStop"
+                android:layout_width="64dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/stop"
+                android:textSize="8sp"
+                android:layout_marginTop="4dp"
+                style="@style/Generals.Button" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Controls hint -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="80dp"
+        android:text="@string/controls_hint"
+        android:textSize="7sp"
+        android:textColor="#80FFFFFF"
+        android:fontFamily="monospace"
+        android:background="#80000000"
+        android:padding="4dp" />
+
+</FrameLayout>

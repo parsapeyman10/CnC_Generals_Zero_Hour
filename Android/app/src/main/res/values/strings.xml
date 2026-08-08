@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Generals Zero Hour</string>
+    <string name="app_subtitle">COMMAND &amp; CONQUER™ - Mobile Edition</string>
+    <string name="tap_to_start">TAP TO START</string>
+    <string name="menu_skirmish">Skirmish</string>
+    <string name="menu_campaign">Campaign</string>
+    <string name="menu_multiplayer">Multiplayer</string>
+    <string name="menu_options">Options</string>
+    <string name="menu_exit">Exit</string>
+    <string name="select_faction">Select Faction</string>
+    <string name="faction_usa">USA</string>
+    <string name="faction_china">China</string>
+    <string name="faction_gla">GLA</string>
+    <string name="faction_usa_desc">Super Weapon General</string>
+    <string name="faction_china_desc">Tank General</string>
+    <string name="faction_gla_desc">Stealth General</string>
+    <string name="game_generals_challenge">Generals Challenge</string>
+    <string name="map_twilight_flame">Twilight Flame</string>
+    <string name="options_graphics">Graphics: %1$s</string>
+    <string name="options_sound">Sound: %1$s</string>
+    <string name="version">v1.0 PC Structure • Galaxy A30 Optimized</string>
+    <string name="loading">LOADING...</string>
+    <string name="commander">Commander</string>
+    <string name="credits">Credits: %1$d $</string>
+    <string name="power">Power: %1$d</string>
+    <string name="build">BUILD</string>
+    <string name="attack">ATTACK</string>
+    <string name="stop">STOP</string>
+    <string name="repair">REPAIR</string>
+    <string name="sell">SELL</string>
+    <string name="controls_hint">Tap:Select • Long Press:Move/Attack • Pinch:Zoom • Drag:Scroll Map</string>
+</resources>
