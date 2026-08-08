@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Splash / Main - مثل صفحه اول Generals PC -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_splash">
+
+    <!-- Background grid like PC -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/generals_black"
+        android:alpha="0.3" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp">
+
+        <!-- Logo Area -->
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_generals_star"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="COMMAND &amp; CONQUER"
+            android:textSize="14sp"
+            android:letterSpacing="0.3"
+            android:textColor="@color/generals_grey_light"
+            android:fontFamily="monospace" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GENERALS"
+            android:textSize="42sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.15"
+            android:textColor="@color/generals_gold_light"
+            android:fontFamily="monospace"
+            android:layout_marginTop="4dp"
+            android:shadowColor="#80000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="4" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ZERO HOUR"
+            android:textSize="18sp"
+            android:letterSpacing="0.25"
+            android:textColor="@color/generals_gold"
+            android:fontFamily="monospace"
+            android:layout_marginTop="2dp" />
+
+        <View
+            android:layout_width="120dp"
+            android:layout_height="1dp"
+            android:background="@color/generals_gold_dark"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_subtitle"
+            android:textSize="10sp"
+            android:textColor="@color/generals_grey"
+            android:letterSpacing="0.1"
+            android:fontFamily="monospace" />
+
+        <!-- Loading / Tap -->
+        <TextView
+            android:id="@+id/tapToStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tap_to_start"
+            android:textSize="12sp"
+            android:textColor="@color/generals_gold_light"
+            android:letterSpacing="0.2"
+            android:fontFamily="monospace"
+            android:layout_marginTop="48dp"
+            android:padding="16dp"
+            android:background="@drawable/bg_panel" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/version"
+            android:textSize="9sp"
+            android:textColor="@color/generals_grey"
+            android:fontFamily="monospace"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:id="@+id/engineInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PC Structure Preserved • GameLogic • GameClient • INI"
+            android:textSize="8sp"
+            android:textColor="#60FFFFFF"
+            android:fontFamily="monospace"
+            android:layout_marginTop="8dp"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <!-- Bottom bar like PC -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom">
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="@color/generals_gold" />
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="@color/generals_gold_dark" />
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="@color/generals_gold" />
+    </LinearLayout>
+
+</FrameLayout>
