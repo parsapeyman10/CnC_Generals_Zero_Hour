@@ -3,15 +3,14 @@ package com.ea.generals
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ea.generals.databinding.ActivityGameBinding
 import com.ea.generals.engine.GeneralsEngine
 
 /**
- * GameActivity - گرگ‌میش battlefield
- * PC structure preserved, map is گرگ‌میش
+ * GameActivity - گرگ‌میش 8 Players Network Mode
+ * Like PC's Network Skirmish: you vs 1-7 AI
  */
 class GameActivity : AppCompatActivity() {
 
@@ -27,30 +26,33 @@ class GameActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         window.decorView.systemUiVisibility = (
-            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-            or View.SYSTEM_UI_FLAG_FULLSCREEN
-            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            or android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
+            or android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
         )
         window.addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         val faction = intent.getStringExtra("faction") ?: "USA"
         val map = intent.getStringExtra("map") ?: "گرگ‌میش"
+        val enemyCount = intent.getIntExtra("enemyCount", 3)
+        val difficulty = intent.getStringExtra("difficulty") ?: "Medium"
+        val aiFactions = intent.getStringArrayListExtra("aiFactions") ?: arrayListOf("China","GLA","USA")
 
-        engine = GeneralsEngine(faction, map)
+        engine = GeneralsEngine(faction, map, enemyCount, difficulty, aiFactions)
         binding.gameView.setEngine(engine)
         binding.gameView.setFaction(faction)
 
         updateHud()
-        handler.postDelayed(resourceTick, 2000)
+        handler.postDelayed(resourceTick, 1000)
 
         binding.btnMenu.setOnClickListener {
             engine.isPaused = !engine.isPaused
-            Toast.makeText(this, if (engine.isPaused) "Paused - گرگ‌میش" else "Resumed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, if (engine.isPaused) "Paused - گرگ‌میش ${enemyCount+1}P" else "Resumed", Toast.LENGTH_SHORT).show()
         }
 
         binding.btnBuildDozer.setOnClickListener {
             if (credits >= 500) { credits -= 500; engine.spawnUnit("dozer"); updateHud()
-                Toast.makeText(this, "Dozer ready - گرگ‌ها نزدیکند!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Dozer ready", Toast.LENGTH_SHORT).show()
             } else Toast.makeText(this, "بودجه کم است", Toast.LENGTH_SHORT).show()
         }
         binding.btnBuildSupply.setOnClickListener {
@@ -62,28 +64,28 @@ class GameActivity : AppCompatActivity() {
             else Toast.makeText(this, "بودجه کم است", Toast.LENGTH_SHORT).show()
         }
         binding.btnBuildWarFactory.setOnClickListener {
-            // In گرگ‌میش this is Fence
             if (credits >= 800) { credits -= 800; engine.spawnBuilding("fence"); updateHud()
-                Toast.makeText(this, "حصار ساخته شد - از گله محافظت می‌کند", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "حصار ساخته شد", Toast.LENGTH_SHORT).show()
             }
         }
 
         binding.btnAttack.setOnClickListener {
             engine.setMode(GeneralsEngine.Mode.ATTACK)
-            Toast.makeText(this, "حالت حمله - گرگ را انتخاب کن", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "حالت حمله - دشمن را انتخاب کن", Toast.LENGTH_SHORT).show()
         }
         binding.btnStop.setOnClickListener { engine.setMode(GeneralsEngine.Mode.SELECT); engine.stopSelected() }
 
         binding.gameView.onCreditsChanged = { delta -> credits += delta; updateHud() }
         binding.gameView.onMessage = { msg -> runOnUiThread { Toast.makeText(this, msg, Toast.LENGTH_SHORT).show() } }
 
-        Toast.makeText(this, "گرگ‌میش - فرمانده $faction\nاز 8 گوسفند محافظت کن! گرگ‌ها از شمال می‌آیند\nTap=انتخاب LongPress=حرکت/حمله", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "گرگ‌میش 8P - $faction vs $enemyCount AI ($difficulty)\n${enemyCount+1} بازیکن - FFA\nTap=انتخاب LongPress=حرکت/حمله", Toast.LENGTH_LONG).show()
     }
 
     private fun updateHud() {
         binding.tvCredits.text = "Credits: $credits $"
         binding.tvPower.text = "Power: +$power"
-        binding.tvTime.text = "${engine.gameTimeFormatted()}  🐑${engine.sheepAlive()}/${engine.sheepTotal()} 🐺${engine.wolvesAlive()}"
+        val aliveEnemies = engine.enemiesAlive()
+        binding.tvTime.text = "${engine.gameTimeFormatted()} 🐑${engine.sheepAlive()}/${engine.sheepTotal()} 🐺${engine.wolvesAlive()} 👥${aliveEnemies} AI"
     }
 
     private val resourceTick = object : Runnable {
@@ -93,16 +95,27 @@ class GameActivity : AppCompatActivity() {
                 power = engine.powerStatus()
                 updateHud()
                 binding.gameView.tick()
-                // Check win/lose for گرگ‌میش
+                // Win/lose for 8P
                 if (engine.sheepAlive() == 0) {
-                    Toast.makeText(this@GameActivity, "شکست! همه گوسفندها خورده شدند - گرگ‌ها پیروز شدند", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@GameActivity, "شکست! گوسفندها خورده شدند", Toast.LENGTH_LONG).show()
                     engine.isPaused = true
-                } else if (engine.wolvesAlive() == 0 && engine.gameTimeFormatted() > "03:00" && engine.sheepAlive() >= 5) {
-                    // After 3 min if wolves cleared and sheep saved
-                    // not auto win, just hint
+                } else if (aliveEnemiesKilled()) {
+                    Toast.makeText(this@GameActivity, "پیروزی! همه دشمنان نابود شدند 🎉", Toast.LENGTH_LONG).show()
+                    engine.isPaused = true
+                } else if (isHumanEliminated()) {
+                    Toast.makeText(this@GameActivity, "شکست! پایگاه شما نابود شد", Toast.LENGTH_LONG).show()
+                    engine.isPaused = true
                 }
             }
             handler.postDelayed(this, 1000)
+        }
+        private fun aliveEnemiesKilled(): Boolean {
+            // All AI HQs destroyed?
+            return engine.players.filter{it.isAI}.all{ !it.alive } && engine.enemiesAlive()==0
+        }
+        private fun isHumanEliminated(): Boolean {
+            val human = engine.players.find{it.isHuman}
+            return human?.alive == false
         }
     }
 

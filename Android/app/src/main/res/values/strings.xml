@@ -7,7 +7,7 @@
     <string name="menu_multiplayer">Multiplayer</string>
     <string name="menu_options">Options</string>
     <string name="menu_exit">Exit</string>
-    <string name="select_faction">Select Faction</string>
+    <string name="select_faction">Select Your Faction</string>
     <string name="faction_usa">USA</string>
     <string name="faction_china">China</string>
     <string name="faction_gla">GLA</string>
@@ -16,12 +16,12 @@
     <string name="faction_gla_desc">Stealth General</string>
     <string name="game_generals_challenge">Generals Challenge</string>
     <string name="map_twilight_flame">Twilight Flame</string>
-    <string name="map_gorge_mish">گرگ‌میش - Wolf &amp; Sheep</string>
-    <string name="map_gorge_mish_desc">دهکده در محاصره گرگ‌ها - از گله محافظت کن!</string>
+    <string name="map_gorge_mish">گرگ‌میش - 8 Players</string>
+    <string name="map_gorge_mish_desc">8 نفره - دهکده در محاصره گرگ‌ها - از گله محافظت کن!</string>
     <string name="options_graphics">Graphics: %1$s</string>
     <string name="options_sound">Sound: %1$s</string>
-    <string name="version">v1.0 PC Structure • گرگ‌میش • A30 Optimized</string>
-    <string name="loading">LOADING گرگ‌میش...</string>
+    <string name="version">v1.0 PC Structure • گرگ‌میش 8P • A30 Optimized</string>
+    <string name="loading">LOADING گرگ‌میش 8P...</string>
     <string name="commander">Commander</string>
     <string name="credits">Credits: %1$d $</string>
     <string name="power">Power: %1$d</string>
@@ -30,5 +30,15 @@
     <string name="stop">STOP</string>
     <string name="repair">REPAIR</string>
     <string name="sell">SELL</string>
-    <string name="controls_hint">گرگ‌میش: Tap=انتخاب • LongPress=حرکت/حمله • Pinch=زوم</string>
+    <string name="controls_hint">گرگ‌میش 8P: Tap=انتخاب • LongPress=حرکت/حمله • Pinch=زوم</string>
+    <string name="network_mode">Network Mode (Skirmish)</string>
+    <string name="enemy_count">تعداد دشمنان: %1$d</string>
+    <string name="difficulty_easy">Easy</string>
+    <string name="difficulty_medium">Medium</string>
+    <string name="difficulty_hard">Hard</string>
+    <string name="difficulty_brutal">Brutal</string>
+    <string name="player_human">You</string>
+    <string name="player_ai">AI</string>
+    <string name="player_closed">Closed</string>
+    <string name="slots">اسلات‌ها (8 نفره)</string>
 </resources>
