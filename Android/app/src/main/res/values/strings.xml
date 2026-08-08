@@ -16,10 +16,12 @@
     <string name="faction_gla_desc">Stealth General</string>
     <string name="game_generals_challenge">Generals Challenge</string>
     <string name="map_twilight_flame">Twilight Flame</string>
+    <string name="map_gorge_mish">گرگ‌میش - Wolf &amp; Sheep</string>
+    <string name="map_gorge_mish_desc">دهکده در محاصره گرگ‌ها - از گله محافظت کن!</string>
     <string name="options_graphics">Graphics: %1$s</string>
     <string name="options_sound">Sound: %1$s</string>
-    <string name="version">v1.0 PC Structure • Galaxy A30 Optimized</string>
-    <string name="loading">LOADING...</string>
+    <string name="version">v1.0 PC Structure • گرگ‌میش • A30 Optimized</string>
+    <string name="loading">LOADING گرگ‌میش...</string>
     <string name="commander">Commander</string>
     <string name="credits">Credits: %1$d $</string>
     <string name="power">Power: %1$d</string>
@@ -28,5 +30,5 @@
     <string name="stop">STOP</string>
     <string name="repair">REPAIR</string>
     <string name="sell">SELL</string>
-    <string name="controls_hint">Tap:Select • Long Press:Move/Attack • Pinch:Zoom • Drag:Scroll Map</string>
+    <string name="controls_hint">گرگ‌میش: Tap=انتخاب • LongPress=حرکت/حمله • Pinch=زوم</string>
 </resources>

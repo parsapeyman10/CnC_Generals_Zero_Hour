@@ -10,10 +10,8 @@ import com.ea.generals.databinding.ActivityGameBinding
 import com.ea.generals.engine.GeneralsEngine
 
 /**
- * GameActivity - The actual RTS battlefield
- * This is where PC's GameLogic + GameClient run.
- * For now we use a 2D Canvas engine that preserves PC structure (resource, build, attack)
- * Future: replace GameView with GLES rendering of W3D meshes
+ * GameActivity - گرگ‌میش battlefield
+ * PC structure preserved, map is گرگ‌میش
  */
 class GameActivity : AppCompatActivity() {
 
@@ -36,86 +34,56 @@ class GameActivity : AppCompatActivity() {
         window.addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         val faction = intent.getStringExtra("faction") ?: "USA"
-        val map = intent.getStringExtra("map") ?: "Twilight Flame"
+        val map = intent.getStringExtra("map") ?: "گرگ‌میش"
 
-        // Initialize engine with PC structure preserved
         engine = GeneralsEngine(faction, map)
         binding.gameView.setEngine(engine)
         binding.gameView.setFaction(faction)
 
         updateHud()
-
-        // Simulate PC's resource tick
         handler.postDelayed(resourceTick, 2000)
 
-        // HUD interactions
         binding.btnMenu.setOnClickListener {
-            // Pause like PC ESC menu
             engine.isPaused = !engine.isPaused
-            Toast.makeText(this, if (engine.isPaused) "Game Paused (ESC)" else "Resumed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, if (engine.isPaused) "Paused - گرگ‌میش" else "Resumed", Toast.LENGTH_SHORT).show()
         }
 
         binding.btnBuildDozer.setOnClickListener {
-            if (credits >= 500) {
-                credits -= 500
-                engine.spawnUnit("dozer")
-                updateHud()
-                Toast.makeText(this, "Construction Dozer ready - Tap to place", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Insufficient funds", Toast.LENGTH_SHORT).show()
-            }
+            if (credits >= 500) { credits -= 500; engine.spawnUnit("dozer"); updateHud()
+                Toast.makeText(this, "Dozer ready - گرگ‌ها نزدیکند!", Toast.LENGTH_SHORT).show()
+            } else Toast.makeText(this, "بودجه کم است", Toast.LENGTH_SHORT).show()
         }
-
         binding.btnBuildSupply.setOnClickListener {
-            if (credits >= 800) {
-                credits -= 800
-                engine.spawnBuilding("supply")
-                updateHud()
-            }
+            if (credits >= 800) { credits -= 800; engine.spawnBuilding("supply"); updateHud() }
+            else Toast.makeText(this, "بودجه کم است", Toast.LENGTH_SHORT).show()
         }
-
         binding.btnBuildBarracks.setOnClickListener {
-            if (credits >= 1000) {
-                credits -= 1000
-                engine.spawnBuilding("barracks")
-                updateHud()
-            }
+            if (credits >= 1000) { credits -= 1000; engine.spawnBuilding("barracks"); updateHud() }
+            else Toast.makeText(this, "بودجه کم است", Toast.LENGTH_SHORT).show()
         }
-
         binding.btnBuildWarFactory.setOnClickListener {
-            if (credits >= 2000) {
-                credits -= 2000
-                engine.spawnBuilding("factory")
-                updateHud()
+            // In گرگ‌میش this is Fence
+            if (credits >= 800) { credits -= 800; engine.spawnBuilding("fence"); updateHud()
+                Toast.makeText(this, "حصار ساخته شد - از گله محافظت می‌کند", Toast.LENGTH_SHORT).show()
             }
         }
 
         binding.btnAttack.setOnClickListener {
             engine.setMode(GeneralsEngine.Mode.ATTACK)
-            Toast.makeText(this, "Select target - Attack mode", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "حالت حمله - گرگ را انتخاب کن", Toast.LENGTH_SHORT).show()
         }
+        binding.btnStop.setOnClickListener { engine.setMode(GeneralsEngine.Mode.SELECT); engine.stopSelected() }
 
-        binding.btnStop.setOnClickListener {
-            engine.setMode(GeneralsEngine.Mode.SELECT)
-            engine.stopSelected()
-        }
+        binding.gameView.onCreditsChanged = { delta -> credits += delta; updateHud() }
+        binding.gameView.onMessage = { msg -> runOnUiThread { Toast.makeText(this, msg, Toast.LENGTH_SHORT).show() } }
 
-        // GameView callbacks
-        binding.gameView.onCreditsChanged = { delta ->
-            credits += delta
-            updateHud()
-        }
-        binding.gameView.onMessage = { msg ->
-            runOnUiThread { Toast.makeText(this, msg, Toast.LENGTH_SHORT).show() }
-        }
-
-        Toast.makeText(this, "Commander $faction - Map: $map\nControls: Tap=Select LongPress=Move Pinch=Zoom", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "گرگ‌میش - فرمانده $faction\nاز 8 گوسفند محافظت کن! گرگ‌ها از شمال می‌آیند\nTap=انتخاب LongPress=حرکت/حمله", Toast.LENGTH_LONG).show()
     }
 
     private fun updateHud() {
         binding.tvCredits.text = "Credits: $credits $"
         binding.tvPower.text = "Power: +$power"
-        binding.tvTime.text = engine.gameTimeFormatted()
+        binding.tvTime.text = "${engine.gameTimeFormatted()}  🐑${engine.sheepAlive()}/${engine.sheepTotal()} 🐺${engine.wolvesAlive()}"
     }
 
     private val resourceTick = object : Runnable {
@@ -125,25 +93,20 @@ class GameActivity : AppCompatActivity() {
                 power = engine.powerStatus()
                 updateHud()
                 binding.gameView.tick()
+                // Check win/lose for گرگ‌میش
+                if (engine.sheepAlive() == 0) {
+                    Toast.makeText(this@GameActivity, "شکست! همه گوسفندها خورده شدند - گرگ‌ها پیروز شدند", Toast.LENGTH_LONG).show()
+                    engine.isPaused = true
+                } else if (engine.wolvesAlive() == 0 && engine.gameTimeFormatted() > "03:00" && engine.sheepAlive() >= 5) {
+                    // After 3 min if wolves cleared and sheep saved
+                    // not auto win, just hint
+                }
             }
             handler.postDelayed(this, 1000)
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        engine.isPaused = true
-        binding.gameView.pause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        engine.isPaused = false
-        binding.gameView.resume()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        handler.removeCallbacks(resourceTick)
-    }
+    override fun onPause() { super.onPause(); engine.isPaused = true; binding.gameView.pause() }
+    override fun onResume() { super.onResume(); engine.isPaused = false; binding.gameView.resume() }
+    override fun onDestroy() { super.onDestroy(); handler.removeCallbacks(resourceTick) }
 }
